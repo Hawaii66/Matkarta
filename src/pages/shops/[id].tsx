@@ -32,7 +32,7 @@ function ShopPage({ shop }: Props) {
       </div>
       <div className="w-11/12">
         {sorted.map((category) => (
-          <Category dishCategory={category} />
+          <Category dishCategory={category} shopId={shop.id} />
         ))}
       </div>
     </div>
@@ -43,6 +43,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
   const shop = await GetShop(parseInt(context.query.id?.toString() || ""));
+
+  console.log(shop.dishes.map((i) => i));
 
   return {
     props: {

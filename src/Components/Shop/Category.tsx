@@ -5,10 +5,11 @@ import { GoTriangleRight, GoTriangleDown } from "react-icons/go";
 
 interface Props {
   dishCategory: IDishCategory;
+  shopId: number;
 }
 
-function Category({ dishCategory }: Props) {
-  const [visible, setVisible] = useState(false);
+function Category({ dishCategory, shopId }: Props) {
+  const [visible, setVisible] = useState(true);
 
   return (
     <div className="mb-4">
@@ -23,9 +24,9 @@ function Category({ dishCategory }: Props) {
         )}
       </div>
       {visible && (
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 gap-2">
           {dishCategory.dishes.map((dish) => (
-            <CategoryDish dish={dish} />
+            <CategoryDish dish={dish} shopId={shopId} />
           ))}
         </div>
       )}
