@@ -1,6 +1,7 @@
 import { useSupabase } from "@/Hooks/useSupabase";
 import { IPreviewShop, IShop } from "@/Interface/Shop";
 import { GetDishes, GetDishesForShop } from "./Dish";
+import { GetPrimaryImage, GetShopImages } from "./Images";
 import { GetShopLocation } from "./Location";
 import supabase from "./Supabase";
 
@@ -45,10 +46,13 @@ export const GetAllBasicShop = async (): Promise<IPreviewShop[]> => {
     return [];
   }
 
+  const image = await GetPrimaryImage(shops[0].id);
+
   return shops.map((shop) => ({
     category: shop.category,
     description: shop.description,
-    images: [],
+    images: [image],
     name: shop.name,
+    id: shop.id,
   }));
 };

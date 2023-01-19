@@ -24,15 +24,20 @@ export interface IDish {
   images: string[];
 }
 
+export interface IDishCategory {
+  dishes: IDish[];
+  category: string;
+}
+
 export interface IPreviewShop {
   images: string[];
   name: string;
   description: string;
   category: string;
+  id: number;
 }
 
 export interface IShop extends IPreviewShop, ILocation {
-  id: number;
   dishes: IDish[];
   images: string[];
 }

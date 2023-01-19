@@ -29,7 +29,7 @@ function Shops({ scrollTo }: Props) {
   return (
     <div className="w-1/4 z-50">
       {shops.map((shop, index) => (
-        <ShopCard ref={refs[index]} shop={shop} />
+        <ShopCard key={shop.name} ref={refs[index]} shop={shop} />
       ))}
     </div>
   );

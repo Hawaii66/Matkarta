@@ -1,5 +1,6 @@
 import { useSupabase } from "@/Hooks/useSupabase";
 import { IDish } from "@/Interface/Shop";
+import { GetDishImages } from "./Images";
 import {
   GetIngridient,
   GetIngridients,
@@ -28,6 +29,8 @@ export const GetDish = async (dishId: number): Promise<IDish> => {
 
   const ingridients = await GetIngridientsFromDish(dish.id);
 
+  const images = await GetDishImages(dish.shop, dish.id);
+
   return {
     category: dish.category,
     cost: dish.cost,
@@ -35,7 +38,7 @@ export const GetDish = async (dishId: number): Promise<IDish> => {
     id: dish.id,
     name: dish.name,
     ingridients: ingridients,
-    images: [],
+    images: images,
   };
 };
 
