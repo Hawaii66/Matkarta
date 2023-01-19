@@ -1,5 +1,5 @@
 import { useSupabase } from "@/Hooks/useSupabase";
-import { IBasicShop, IShop } from "@/Interface/Shop";
+import { IPreviewShop, IShop } from "@/Interface/Shop";
 import { GetDishes, GetDishesForShop } from "./Dish";
 import { GetShopLocation } from "./Location";
 import supabase from "./Supabase";
@@ -20,6 +20,7 @@ export const GetShop = async (shopId: number): Promise<IShop> => {
       lat: 0,
       lng: 0,
       name: "",
+      category: "",
     };
   }
 
@@ -33,9 +34,21 @@ export const GetShop = async (shopId: number): Promise<IShop> => {
     id: shop.id,
     images: [],
     name: shop.name,
+    category: shop.category,
   };
 };
 
-export const GetAllBasicShop = async (): Promise<IBasicShop[]> => {
-  return [];
+export const GetAllBasicShop = async (): Promise<IPreviewShop[]> => {
+  const { data: shops, error } = await supabase.from("Shops").select("*");
+
+  if (error) {
+    return [];
+  }
+
+  return shops.map((shop) => ({
+    category: shop.category,
+    description: shop.description,
+    images: [],
+    name: shop.name,
+  }));
 };

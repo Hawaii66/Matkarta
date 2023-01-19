@@ -24,13 +24,14 @@ export interface IDish {
   images: string[];
 }
 
-export interface IBasicShop {
+export interface IPreviewShop {
   images: string[];
   name: string;
   description: string;
+  category: string;
 }
 
-export interface IShop extends IBasicShop, ILocation {
+export interface IShop extends IPreviewShop, ILocation {
   id: number;
   dishes: IDish[];
   images: string[];

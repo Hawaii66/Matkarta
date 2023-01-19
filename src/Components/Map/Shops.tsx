@@ -1,3 +1,4 @@
+import { useShopPreviews } from "@/Hooks/useShopPreviews";
 import React, { useEffect, useRef, useState } from "react";
 import Divider from "../Utils/Divider";
 import ShopCard from "./ShopCard";
@@ -7,6 +8,8 @@ interface Props {
 }
 
 function Shops({ scrollTo }: Props) {
+  const shops = useShopPreviews();
+
   const refs = Array.from(Array(8)).reduce((acc, value, index) => {
     acc[index] = React.createRef();
     return acc;
@@ -25,19 +28,9 @@ function Shops({ scrollTo }: Props) {
 
   return (
     <div className="w-1/4 z-50">
-      <h1>Sushi</h1>
-      <ShopCard ref={refs[0]} />
-      <ShopCard ref={refs[1]} />
-      <ShopCard ref={refs[2]} />
-      <ShopCard ref={refs[3]} />
-      <Divider />
-      <h1>Hamburger</h1>
-      <ShopCard ref={refs[4]} />
-      <ShopCard ref={refs[5]} />
-      <ShopCard ref={refs[6]} />
-      <Divider />
-      <h1>Other</h1>
-      <ShopCard ref={refs[7]} />
+      {shops.map((shop, index) => (
+        <ShopCard ref={refs[index]} shop={shop} />
+      ))}
     </div>
   );
 }
