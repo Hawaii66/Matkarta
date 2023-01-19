@@ -1,9 +1,8 @@
 import { useSupabase } from "@/Hooks/useSupabase";
 import { ILocation, IShopLocation } from "@/Interface/Shop";
+import supabase from "./Supabase";
 
 export const GetShopLocation = async (shopId: number): Promise<ILocation> => {
-  const supabase = useSupabase();
-
   const { data: location, error } = await supabase
     .from("Shops")
     .select("*")
@@ -24,17 +23,18 @@ export const GetShopLocation = async (shopId: number): Promise<ILocation> => {
 };
 
 export const GetAllLocations = async (): Promise<IShopLocation[]> => {
-  const supabase = useSupabase();
-
   const { data: locations, error } = await supabase.from("Shops").select("*");
 
   if (error) {
     return [];
   }
 
-  return locations.map((location) => ({
+  const returns: IShopLocation[] = locations.map((location: any) => ({
     lat: location.lat,
     lng: location.lng,
+    name: location.name,
     shopId: location.id,
   }));
+
+  return returns;
 };

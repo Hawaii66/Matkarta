@@ -5,10 +5,9 @@ import {
   GetIngridients,
   GetIngridientsFromDish,
 } from "./Ingridient";
+import supabase from "./Supabase";
 
 export const GetDish = async (dishId: number): Promise<IDish> => {
-  const supabase = useSupabase();
-
   const { data: dish, error } = await supabase
     .from("Dishes")
     .select("*")
@@ -51,8 +50,6 @@ export const GetDishes = async (ids: number[]): Promise<IDish[]> => {
 };
 
 export const GetDishesForShop = async (shopId: number): Promise<IDish[]> => {
-  const supabase = useSupabase();
-
   const { data: dishes, error } = await supabase
     .from("Dishes")
     .select("*")

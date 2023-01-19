@@ -2,12 +2,23 @@ import React from "react";
 import Map from "react-map-gl";
 import ShopMarker from "./ShopMarker";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useLocation } from "@/Hooks/useLocations";
 
 interface Props {
   markerClicked: (index: number) => void;
 }
 
 function ShopMap({ markerClicked }: Props) {
+  const { locations, loading } = useLocation();
+
+  if (loading) {
+    return (
+      <div>
+        <h1>Laddar platser</h1>
+      </div>
+    );
+  }
+
   return (
     <Map
       initialViewState={{
@@ -19,7 +30,15 @@ function ShopMap({ markerClicked }: Props) {
       mapStyle={process.env.NEXT_PUBLIC_MAP_BOX_STYLE}
       attributionControl={false}
     >
-      <ShopMarker onClick={() => markerClicked(5)} />
+      {locations.map((location, index) => (
+        <ShopMarker
+          lat={location.lat}
+          lng={location.lng}
+          name={location.name}
+          key={location.shopId}
+          onClick={() => markerClicked(index)}
+        />
+      ))}
     </Map>
   );
 }

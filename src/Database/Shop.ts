@@ -2,10 +2,9 @@ import { useSupabase } from "@/Hooks/useSupabase";
 import { IBasicShop, IShop } from "@/Interface/Shop";
 import { GetDishes, GetDishesForShop } from "./Dish";
 import { GetShopLocation } from "./Location";
+import supabase from "./Supabase";
 
 export const GetShop = async (shopId: number): Promise<IShop> => {
-  const supabase = useSupabase();
-
   const { data: shop, error } = await supabase
     .from("Shops")
     .select("*")

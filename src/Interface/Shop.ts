@@ -5,6 +5,7 @@ export interface ILocation {
 
 export interface IShopLocation extends ILocation {
   shopId: number;
+  name: string;
 }
 
 export interface IIngridient {

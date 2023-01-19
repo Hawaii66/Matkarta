@@ -4,14 +4,16 @@ import { AiOutlineShop } from "react-icons/ai";
 
 interface Props {
   name?: string;
+  lat: number;
+  lng: number;
   onClick?: () => void;
 }
 
-function ShopMarker({ name = "Shop", onClick }: Props) {
+function ShopMarker({ name = "Shop", lat, lng, onClick }: Props) {
   return (
     <Marker
-      latitude={58.75375362119627}
-      longitude={17.00188014002779}
+      latitude={lat}
+      longitude={lng}
       anchor={"bottom"}
       onClick={() => {
         if (onClick) {

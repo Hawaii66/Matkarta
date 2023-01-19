@@ -1,11 +1,10 @@
 import { useSupabase } from "@/Hooks/useSupabase";
 import { IIngridient } from "@/Interface/Shop";
+import supabase from "./Supabase";
 
 export const GetIngridient = async (
   ingridientId: number
 ): Promise<IIngridient> => {
-  const supabase = useSupabase();
-
   const { data: ingridient, error } = await supabase
     .from("Ingridients")
     .select("*")
@@ -41,8 +40,6 @@ export const GetIngridients = async (ids: number[]): Promise<IIngridient[]> => {
 export const GetIngridientsFromDish = async (
   dishId: number
 ): Promise<IIngridient[]> => {
-  const supabase = useSupabase();
-
   const { data: ingridients, error } = await supabase
     .from("Ingridients")
     .select("*")
