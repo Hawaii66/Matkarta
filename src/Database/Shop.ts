@@ -57,3 +57,39 @@ export const GetAllBasicShop = async (): Promise<IPreviewShop[]> => {
     id: shop.id,
   }));
 };
+
+export const GetPreviewShops = async (
+  shops: number[]
+): Promise<IPreviewShop[]> => {
+  const promises: Promise<IPreviewShop>[] = [];
+  shops.forEach((shop) => {
+    promises.push(GetPreviewShop(shop));
+  });
+
+  return await Promise.all(promises);
+};
+
+export const GetPreviewShop = async (shopId: number): Promise<IPreviewShop> => {
+  const { data: shop, error } = await supabase
+    .from("Shops")
+    .select("*")
+    .eq("id", shopId)
+    .single();
+
+  if (error) {
+    return {
+      category: "",
+      description: "",
+      id: -1,
+      images: [],
+      name: "",
+    };
+  }
+
+  const image = await GetPrimaryImage(shopId);
+
+  return {
+    ...shop,
+    images: [image],
+  };
+};

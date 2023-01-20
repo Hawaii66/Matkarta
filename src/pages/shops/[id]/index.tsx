@@ -41,8 +41,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const shop = await GetShop(parseInt(context.query.id?.toString() || ""));
 
-  console.log(shop);
-
   return {
     props: {
       shop,
