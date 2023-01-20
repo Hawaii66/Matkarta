@@ -7,7 +7,5 @@ export const IsAuthedOnServer = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await createServerSupabaseClient(ctx).auth.getSession();
 
-  console.log(session);
-
   return session;
 };

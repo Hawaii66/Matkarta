@@ -26,8 +26,6 @@ export const useAdminShops = (userId: string) => {
       return;
     }
 
-    console.log(userId);
-
     fetchShops();
   }, [userId]);
 
