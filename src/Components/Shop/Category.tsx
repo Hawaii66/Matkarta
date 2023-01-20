@@ -1,7 +1,8 @@
 import { IDishCategory } from "@/Interface/Shop";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryDish from "./CategoryDish";
 import { GoTriangleRight, GoTriangleDown } from "react-icons/go";
+import SmoothCollapse from "react-smooth-collapse";
 
 interface Props {
   dishCategory: IDishCategory;
@@ -18,18 +19,18 @@ function Category({ dishCategory, shopId }: Props) {
           {dishCategory.category}
         </h2>
         {visible ? (
-          <GoTriangleDown onClick={() => setVisible((o) => !o)} />
+          <GoTriangleDown onClick={() => setVisible(false)} />
         ) : (
-          <GoTriangleRight onClick={() => setVisible((o) => !o)} />
+          <GoTriangleRight onClick={() => setVisible(true)} />
         )}
       </div>
-      {visible && (
-        <div className="grid grid-cols-2 gap-2">
+      <SmoothCollapse expanded={visible}>
+        <div className="flex flex-col w-full">
           {dishCategory.dishes.map((dish) => (
             <CategoryDish dish={dish} shopId={shopId} />
           ))}
         </div>
-      )}
+      </SmoothCollapse>
     </div>
   );
 }
