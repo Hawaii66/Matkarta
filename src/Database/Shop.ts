@@ -27,13 +27,14 @@ export const GetShop = async (shopId: number): Promise<IShop> => {
 
   const dishes = await GetDishesForShop(shopId);
   const location = await GetShopLocation(shopId);
+  const images = await GetShopImages(shopId);
 
   return {
     ...location,
     description: shop.description,
     dishes: dishes,
     id: shop.id,
-    images: [],
+    images: images,
     name: shop.name,
     category: shop.category,
   };

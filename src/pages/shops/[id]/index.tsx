@@ -9,6 +9,7 @@ import Category from "@/Components/Shop/Category";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import Link from "next/link";
 import Header from "@/Components/Shop/Header";
+import ImageGalleryWrapper from "@/Components/Shop/ImageGalleryWrapper";
 
 interface Props {
   shop: IShop;
@@ -25,6 +26,7 @@ function ShopPage({ shop }: Props) {
         description={shop.description}
         title={shop.name}
       />
+      <ImageGalleryWrapper images={shop.images} />
       <div className="w-11/12">
         {sorted.map((category) => (
           <Category dishCategory={category} shopId={shop.id} />
@@ -39,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const shop = await GetShop(parseInt(context.query.id?.toString() || ""));
 
-  console.log(shop.dishes.map((i) => i));
+  console.log(shop);
 
   return {
     props: {
