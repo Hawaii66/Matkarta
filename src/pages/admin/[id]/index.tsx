@@ -1,4 +1,5 @@
 import AdminShop from "@/Components/Admin/AdminShop";
+import Loading from "@/Components/Admin/Loading";
 import Divider from "@/Components/Utils/Divider";
 import { UpdateDishContext } from "@/Contexts/DishUpdateContext";
 import { GetShop } from "@/Database/Shop";
@@ -34,11 +35,7 @@ function Index({ shop }: Props) {
   };
 
   if (loading) {
-    return (
-      <div className="w-full min-h-full flex items-center justify-center">
-        <h1>Laddar</h1>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

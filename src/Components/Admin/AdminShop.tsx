@@ -48,7 +48,7 @@ function AdminShop({ shop, save }: Props) {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-11/12 flex flex-col items-center">
+      <div className="w-11/12 md:w-1/2 flex flex-col items-center">
         <div className="relative w-full min-w-full flex flex-row justify-center">
           <h1 className="text-lg text-neutral-700 font-bold">{shop.name}</h1>
           <Link className="absolute top-2 left-2" href={"/admin"}>

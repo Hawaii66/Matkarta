@@ -11,6 +11,8 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { AiFillFileAdd } from "react-icons/ai";
 import Link from "next/link";
 import { RiArrowGoBackFill } from "react-icons/ri";
+import { useRouter } from "next/router";
+import Loading from "@/Components/Admin/Loading";
 
 interface Props {
   shop: IShop;
@@ -19,6 +21,7 @@ interface Props {
 }
 
 function CategoryPreview({ shop, dishes, category }: Props) {
+  const router = useRouter();
   const [localShop, setLocalShop] = useState(shop);
   const [localDishes, setLocalDishes] = useState(dishes);
   const [loading, setLoading] = useState(false);
@@ -78,6 +81,10 @@ function CategoryPreview({ shop, dishes, category }: Props) {
 
     setLocalShop(newShop);
     setLocalDishes(newShop.dishes.filter((i) => i.category === category));
+
+    if (newShop.dishes.filter((i) => i.category === category).length === 0) {
+      router.push(`/admin/${shop.id}`);
+    }
   };
 
   const addIng = async (id: number, index: number) => {
@@ -189,12 +196,12 @@ function CategoryPreview({ shop, dishes, category }: Props) {
   };
 
   if (loading) {
-    return <div>Laddar</div>;
+    return <Loading />;
   }
 
   return (
     <div className="w-full flex flex-col items-center mb-12">
-      <div className="w-11/12 flex flex-col items-center">
+      <div className="w-11/12 md:w-1/2 flex flex-col items-center">
         <div className="relative w-full min-w-full flex flex-row justify-center">
           <h1 className="text-lg text-neutral-700 font-bold">{category}</h1>
           <Link className="absolute top-2 left-2" href={`/admin/${shop.id}`}>
@@ -208,6 +215,17 @@ function CategoryPreview({ shop, dishes, category }: Props) {
               key={dish.id}
               className="w-full mt-2 mb-12 p-2 drop-shadow-card bg-neutral-50 rounded flex flex-col items-center"
             >
+              <div className="relative w-full min-w-full flex flex-row justify-center mb-4">
+                <h1 className="text-lg text-neutral-700 font-bold">
+                  Ändra denna maträtt
+                </h1>
+                <button
+                  className="absolute top-2 right-2 bg-red-500 p-2 rounded flex flex-row items-center justify-between"
+                  onClick={() => deleteDish(dish.id)}
+                >
+                  Radera <BsFillTrashFill />
+                </button>
+              </div>
               <EditField
                 saveClicked={() => updateDish(index)}
                 shouldSave={localDishes[index].name !== names[index]}

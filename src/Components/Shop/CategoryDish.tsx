@@ -13,6 +13,10 @@ function CategoryDish({ dish, shopId }: Props) {
     return dish.images.length > 0 && dish.images[0] !== "";
   };
 
+  const hasSeccondImage = () => {
+    return dish.images.length > 1 && dish.images[1] !== "";
+  };
+
   return (
     <Link
       className="w-full drop-shadow-card bg-neutral-50 p-2 rounded flex flex-col items-center mb-4"
@@ -26,12 +30,22 @@ function CategoryDish({ dish, shopId }: Props) {
         </div>
       </div>
       <div className="flex flex-row w-full items-center">
-        {hasImage() && <img src={dish.images[0]} className="w-1/2 pr-2" />}
-        <p>
-          {dish.description.length > (hasImage() ? 50 : 100)
-            ? `${dish.description.slice(0, 50)}...`
-            : dish.description}
-        </p>
+        {hasImage() && (
+          <img src={dish.images[0]} className="w-1/2 mr-2 rounded-lg" />
+        )}
+        {dish.description === "" ? (
+          hasSeccondImage() ? (
+            <img src={dish.images[1]} className="w-1/2 rounded-lg" />
+          ) : (
+            <></>
+          )
+        ) : (
+          <p>
+            {dish.description.length > (hasImage() ? 50 : 100)
+              ? `${dish.description.slice(0, 50)}...`
+              : dish.description}
+          </p>
+        )}
       </div>
     </Link>
   );

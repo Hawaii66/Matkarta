@@ -27,8 +27,8 @@ function index() {
     );
   }
   return (
-    <div className="w-full">
-      <div className="w-11/12 flex flex-col items-center mt-4">
+    <div className="w-full flex items-center flex-col">
+      <div className="w-11/12 md:w-1/2 flex flex-col items-center mt-4">
         <p className="text-lg font-bold text-neutral-700">Inloggad som: </p>
         <p className="text-lg font-bold text-neutral-700">{user.email}</p>
         <button
