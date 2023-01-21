@@ -13,6 +13,7 @@ import Link from "next/link";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Loading from "@/Components/Admin/Loading";
+import ImageEditor from "@/Components/Admin/ImageEditor";
 
 interface Props {
   shop: IShop;
@@ -151,17 +152,13 @@ function CategoryPreview({ shop, dishes, category }: Props) {
     setLocalDishes(newShop.dishes.filter((i) => i.category === category));
   };
 
-  const addImage = async (dishId: number, index: number) => {
-    if (submitedImages[index] === null) {
-      return;
-    }
-
+  const addImage = async (dishId: number, file: File) => {
     setLoading(true);
     const newShop = await SaveShop(localShop, {
       addImage: [
         {
           dishId: dishId,
-          image: submitedImages[index] as File,
+          image: file,
         },
       ],
     });
@@ -243,39 +240,13 @@ function CategoryPreview({ shop, dishes, category }: Props) {
                   }
                 />
               </EditField>
-              <div className="grid grid-cols-3 gap-1 drop-shadow-card bg-neutral-50 p-2 rounded">
-                {dishImages[index].map((image) => (
-                  <div className="relative col-span-1" key={image}>
-                    <img src={image} className="rounded" />
-                    <button
-                      onClick={() => deleteImage(dish.id, image)}
-                      className="absolute bottom-1 right-1 text-md font-bold text-neutral-700 p-1 rounded bg-red-500 flex items-center justify-center"
-                    >
-                      <BsFillTrashFill />
-                    </button>
-                  </div>
-                ))}
-                <div className="grid grid-cols-3 col-span-3">
-                  <input
-                    type="file"
-                    className="col-span-2"
-                    onChange={(e) =>
-                      setSubmitedImages((old) => {
-                        const oldArr = [...old];
-                        oldArr[index] =
-                          e.target.files !== null ? e.target.files[0] : null;
-                        return oldArr;
-                      })
-                    }
-                  />
-                  <button
-                    className="col-span-1 col-start-3 text-md font-bold text-neutral-700 p-1 rounded bg-green-500 flex items-center justify-center"
-                    onClick={() => addImage(dish.id, index)}
-                  >
-                    <AiFillFileAdd />
-                  </button>
-                </div>
-              </div>
+              <ImageEditor
+                addImage={(dishId, file) => addImage(dishId, file)}
+                deleteImage={(dishId, name) => deleteImage(dishId, name)}
+                dishId={dish.id}
+                dishImages={dishImages}
+                index={index}
+              />
               <EditField
                 saveClicked={() => updateDish(index)}
                 shouldSave={

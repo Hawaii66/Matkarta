@@ -9,4 +9,6 @@ export interface IUpdateDishes {
   createDishIngridients?: { dishId: number; ingridients: IIngridient }[];
   addImage?: { dishId: number; image: File }[];
   deleteImage?: { dishId: number; imageName: string }[];
+  addShopImage?: File;
+  removeShopImage?: string;
 }

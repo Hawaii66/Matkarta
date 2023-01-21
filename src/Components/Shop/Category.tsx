@@ -10,7 +10,7 @@ interface Props {
 }
 
 function Category({ dishCategory, shopId }: Props) {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
     <div className="mb-4">
@@ -25,7 +25,7 @@ function Category({ dishCategory, shopId }: Props) {
         )}
       </div>
       <SmoothCollapse expanded={visible}>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full items-center pt-2">
           {dishCategory.dishes.map((dish) => (
             <CategoryDish dish={dish} shopId={shopId} />
           ))}

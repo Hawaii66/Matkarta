@@ -27,7 +27,7 @@ function Shops({ scrollTo }: Props) {
   }, [scrollTo]);
 
   return (
-    <div className="w-1/4 z-50">
+    <div className="w-full md:w-1/4 flex flex-row md:flex-col z-50 overflow-scroll">
       {shops.map((shop, index) => (
         <ShopCard key={shop.name} ref={refs[index]} shop={shop} />
       ))}

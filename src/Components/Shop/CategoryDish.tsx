@@ -19,7 +19,7 @@ function CategoryDish({ dish, shopId }: Props) {
 
   return (
     <Link
-      className="w-full drop-shadow-card bg-neutral-50 p-2 rounded flex flex-col items-center mb-4"
+      className="w-11/12 drop-shadow-card bg-neutral-50 p-2 rounded flex flex-col items-center mb-4"
       href={`/shops/${shopId}/${dish.id}`}
     >
       <div className="flex flex-row w-full items-center justify-between">
@@ -29,13 +29,13 @@ function CategoryDish({ dish, shopId }: Props) {
           <AiOutlineArrowRight className="text-green-500" />
         </div>
       </div>
-      <div className="flex flex-row w-full items-center">
+      <div className="flex flex-row items-center justify-between">
         {hasImage() && (
-          <img src={dish.images[0]} className="w-1/2 mr-2 rounded-lg" />
+          <img src={dish.images[0]} className="w-[48%] mr-2 rounded-lg" />
         )}
         {dish.description === "" ? (
           hasSeccondImage() ? (
-            <img src={dish.images[1]} className="w-1/2 rounded-lg" />
+            <img src={dish.images[1]} className="w-[48%] rounded-lg" />
           ) : (
             <></>
           )

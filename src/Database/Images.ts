@@ -27,28 +27,23 @@ export const GetDishImages = async (
 };
 
 export const GetShopImages = async (shopId: number): Promise<string[]> => {
-  const { data: imageMetadata, error } = await supabase
-    .from("Images")
-    .select("*")
-    .eq("shop", shopId);
+  const staticPath = `${shopId}/shop/`;
 
+  const { data: listed, error } = await supabase.storage
+    .from("images")
+    .list(staticPath);
   if (error) {
     return [];
   }
+  const newPaths = listed
+    .filter((i) => i.name !== ".emptyFolderPlaceholder")
+    .map(
+      (i) =>
+        supabase.storage.from("images").getPublicUrl(`${staticPath}${i.name}`)
+          .data.publicUrl
+    );
 
-  const sortedImageNames = imageMetadata
-    .sort((a, b) => b.index - a.index)
-    .map((i) => i.name);
-
-  const staticPath = `${shopId}/shop/`;
-
-  const paths = sortedImageNames.map(
-    (image) =>
-      supabase.storage.from("images").getPublicUrl(`${staticPath}${image}`).data
-        .publicUrl
-  );
-
-  return paths;
+  return newPaths;
 };
 
 export const AddDishImage = async (
@@ -62,6 +57,16 @@ export const AddDishImage = async (
     .upload(staticPath, file);
 };
 
+export const AddShopImage = async (shopId: number, file: File) => {
+  const staticPath = `${shopId}/shop/${file.name}`;
+  await supabase.storage.from("images").upload(staticPath, file);
+};
+
+export const DeleteShopImage = async (shopId: number, filename: string) => {
+  const staticPath = `${shopId}/shop/${filename}`;
+  await supabase.storage.from("images").remove([staticPath]);
+};
+
 export const DeleteDishImage = async (
   shopId: number,
   dishId: number,
@@ -73,20 +78,7 @@ export const DeleteDishImage = async (
     .remove([staticPath]);
 };
 export const GetPrimaryImage = async (shopId: number): Promise<string> => {
-  const { data: imageMetadata, error } = await supabase
-    .from("Images")
-    .select("*")
-    .eq("shop", shopId)
-    .eq("index", 0)
-    .single();
+  const images = await GetShopImages(shopId);
 
-  if (error) {
-    return "";
-  }
-
-  const staticPath = `${shopId}/shop/`;
-
-  return supabase.storage
-    .from("images")
-    .getPublicUrl(`${staticPath}${imageMetadata.name}`).data.publicUrl;
+  return images[0];
 };

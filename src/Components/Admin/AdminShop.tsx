@@ -9,6 +9,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { GetEmptyDish } from "@/Functions/NewDish";
 import { UpdateDishContext } from "@/Contexts/DishUpdateContext";
 import { IUpdateDishes } from "@/Interface/CRUD";
+import ImageEditor from "./ImageEditor";
 
 interface Props {
   shop: IShop;
@@ -21,6 +22,7 @@ function AdminShop({ shop, save }: Props) {
   const [dishes, setDishes] = useState(shop.dishes);
   const [newCategory, setNewCategory] = useState("");
   const sortedDishes = useSortDishes(dishes);
+  const [shopImages, setShopImages] = useState(shop.images);
 
   const { operations, setOperations } = useContext(UpdateDishContext);
 
@@ -43,6 +45,20 @@ function AdminShop({ shop, save }: Props) {
       category: category,
       dishes: dishes,
       ...info,
+    });
+  };
+
+  const deleteImages = (path: string) => {
+    const name = path.split("/").at(-1) || "";
+
+    save(shop, {
+      removeShopImage: name,
+    });
+  };
+
+  const addImage = (file: File) => {
+    save(shop, {
+      addShopImage: file,
     });
   };
 
@@ -109,6 +125,13 @@ function AdminShop({ shop, save }: Props) {
             </button>
           </div>
         </EditField>
+        <ImageEditor
+          addImage={(_, file) => addImage(file)}
+          deleteImage={(_, path) => deleteImages(path)}
+          dishId={0}
+          dishImages={[shopImages]}
+          index={0}
+        />
       </div>
     </div>
   );

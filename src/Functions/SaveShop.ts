@@ -1,5 +1,10 @@
 import { GetDishes } from "@/Database/Dish";
-import { AddDishImage, DeleteDishImage } from "@/Database/Images";
+import {
+  AddDishImage,
+  AddShopImage,
+  DeleteDishImage,
+  DeleteShopImage,
+} from "@/Database/Images";
 import { GetIngridientsFromDish } from "@/Database/Ingridient";
 import { GetShop } from "@/Database/Shop";
 import supabase from "@/Database/Supabase";
@@ -80,6 +85,12 @@ export const SaveShop = async (
         dishOperations.deleteImage[i].imageName
       );
     }
+  }
+  if (dishOperations.addShopImage) {
+    await AddShopImage(shop.id, dishOperations.addShopImage);
+  }
+  if (dishOperations.removeShopImage) {
+    await DeleteShopImage(shop.id, dishOperations.removeShopImage);
   }
 
   const newShop = await GetShop(shop.id);
