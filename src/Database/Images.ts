@@ -14,11 +14,14 @@ export const GetDishImages = async (
     return [];
   }
 
-  const paths = imageData.map(
-    (data) =>
-      supabase.storage.from("images").getPublicUrl(`${staticPath}/${data.name}`)
-        .data.publicUrl
-  );
+  const paths = imageData
+    .filter((i) => i.name !== ".emptyFolderPlaceholder")
+    .map(
+      (data) =>
+        supabase.storage
+          .from("images")
+          .getPublicUrl(`${staticPath}/${data.name}`).data.publicUrl
+    );
 
   return paths;
 };
@@ -48,6 +51,27 @@ export const GetShopImages = async (shopId: number): Promise<string[]> => {
   return paths;
 };
 
+export const AddDishImage = async (
+  shopId: number,
+  dishId: number,
+  file: File
+) => {
+  const staticPath = `${shopId}/dish/${dishId}/${file.name}`;
+  const { data: imageMetadata, error } = await supabase.storage
+    .from("images")
+    .upload(staticPath, file);
+};
+
+export const DeleteDishImage = async (
+  shopId: number,
+  dishId: number,
+  fileName: string
+) => {
+  const staticPath = `${shopId}/dish/${dishId}/${fileName}`;
+  const { data: imageMetadata, error } = await supabase.storage
+    .from("images")
+    .remove([staticPath]);
+};
 export const GetPrimaryImage = async (shopId: number): Promise<string> => {
   const { data: imageMetadata, error } = await supabase
     .from("Images")

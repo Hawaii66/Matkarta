@@ -1,8 +1,10 @@
 import AdminShop from "@/Components/Admin/AdminShop";
 import Divider from "@/Components/Utils/Divider";
+import { UpdateDishContext } from "@/Contexts/DishUpdateContext";
 import { GetShop } from "@/Database/Shop";
 import { IsAuthedOnServer } from "@/Functions/AuthedServer";
 import { SaveShop } from "@/Functions/SaveShop";
+import { IUpdateDishes } from "@/Interface/CRUD";
 import { IShop } from "@/Interface/Shop";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSideProps } from "next";
@@ -15,10 +17,18 @@ interface Props {
 function Index({ shop }: Props) {
   const [localShop, setLocalShop] = useState(shop);
   const [loading, setLoading] = useState(false);
+  const [localMax, setOperations] = useState<IUpdateDishes>({
+    addDish: [],
+    deleteDishes: [],
+    updateDishes: [],
+    createDishIngridients: [],
+    deleteDishIngridients: [],
+    updateDishIngridients: [],
+  });
 
-  const save = async (shop: IShop) => {
+  const save = async (shop: IShop, operations?: IUpdateDishes) => {
     setLoading(true);
-    const newShop = await SaveShop(shop);
+    const newShop = await SaveShop(shop, operations ? operations : localMax);
     setLocalShop(newShop);
     setLoading(false);
   };
@@ -31,7 +41,16 @@ function Index({ shop }: Props) {
     );
   }
 
-  return <AdminShop shop={localShop} save={save} />;
+  return (
+    <UpdateDishContext.Provider
+      value={{
+        operations: localMax,
+        setOperations: (e) => setOperations(e),
+      }}
+    >
+      <AdminShop shop={localShop} save={save} />
+    </UpdateDishContext.Provider>
+  );
 }
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context

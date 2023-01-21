@@ -10,7 +10,7 @@ interface Props {
 
 function EditField({ children, saveClicked, title, shouldSave }: Props) {
   return (
-    <div className="bg-neutral-50 drop-shadow-card rounded w-full px-2 mt-4 pb-2">
+    <div className="bg-neutral-50 drop-shadow-card rounded w-full px-2 mt-4 mb-2 pb-2">
       <div className="w-full flex flex-row justify-between items-center">
         <h3 className="text-md font-bold text-neutral-700">{title}</h3>
         <button className="text-lg" onClick={saveClicked}>

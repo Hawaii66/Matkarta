@@ -1,16 +1,18 @@
 import { useSortDishes } from "@/Hooks/useSortDishes";
 import { IShop } from "@/Interface/Shop";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import Divider from "../Utils/Divider";
 import EditField from "./EditField";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { GetEmptyDish } from "@/Functions/NewDish";
+import { UpdateDishContext } from "@/Contexts/DishUpdateContext";
+import { IUpdateDishes } from "@/Interface/CRUD";
 
 interface Props {
   shop: IShop;
-  save: (shop: IShop) => void;
+  save: (shop: IShop, options?: IUpdateDishes) => void;
 }
 
 function AdminShop({ shop, save }: Props) {
@@ -20,12 +22,18 @@ function AdminShop({ shop, save }: Props) {
   const [newCategory, setNewCategory] = useState("");
   const sortedDishes = useSortDishes(dishes);
 
-  const addCategory = () => {
-    const newDishes = [...dishes];
-    newDishes.push({ ...GetEmptyDish(), category: newCategory });
+  const { operations, setOperations } = useContext(UpdateDishContext);
 
-    setDishes(newDishes);
-    localSave({ ...shop, dishes: newDishes });
+  const addCategory = () => {
+    const newOperations = {
+      ...operations,
+      addDish: [
+        ...(operations.addDish === undefined ? [] : operations.addDish),
+        { ...GetEmptyDish(), category: newCategory },
+      ],
+    };
+    setOperations(newOperations);
+    save(shop, newOperations);
   };
 
   const localSave = (info?: IShop) => {
@@ -77,7 +85,10 @@ function AdminShop({ shop, save }: Props) {
         >
           {sortedDishes.map((category) => (
             <Link
-              href={`/admin/${shop.id}/category/${category.category}`}
+              key={category.category}
+              href={`/admin/${shop.id}/category/${encodeURI(
+                category.category
+              )}`}
               className="flex flex-row w-full justify-between mb-2"
             >
               <h1 className="text-lg font-bold text-neutral-700">
