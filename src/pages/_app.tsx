@@ -3,6 +3,7 @@ import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import type { AppProps } from "next/app";
 import { useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -12,6 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
       initialSession={pageProps.initialSession}
     >
       <Component {...pageProps} />
+      <Analytics />
     </SessionContextProvider>
   );
 }
