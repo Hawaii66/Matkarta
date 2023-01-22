@@ -1,6 +1,7 @@
+import { LoadingContext } from "@/Contexts/LoadingContext";
 import { IPreviewShop } from "@/Interface/Shop";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 interface Props {
@@ -8,12 +9,18 @@ interface Props {
 }
 
 const ShopCard = React.forwardRef<HTMLDivElement, Props>(({ shop }, ref) => {
+  const { setLoading } = useContext(LoadingContext);
+
   return (
     <div
       ref={ref}
       className="min-w-[60%] md:w-auto m-2 shadow bg-neutral-50 p-2 rounded cursor-pointer"
     >
-      <Link className="w-full" href={`/shops/${shop.id}`}>
+      <Link
+        onClick={() => setLoading(true)}
+        className="w-full"
+        href={`/shops/${shop.id}`}
+      >
         <div>
           <img className="rounded" src={shop.images[0]} />
         </div>
