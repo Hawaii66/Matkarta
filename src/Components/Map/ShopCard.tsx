@@ -36,4 +36,6 @@ const ShopCard = React.forwardRef<HTMLDivElement, Props>(({ shop }, ref) => {
   );
 });
 
+ShopCard.displayName = "ShopCard";
+
 export default ShopCard;
