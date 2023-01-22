@@ -72,11 +72,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [], //indicates that no page needs be created at build time
-    fallback: "blocking", //indicates the type of fallback
-  };
-};
-
 export default Index;
