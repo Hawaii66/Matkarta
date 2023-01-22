@@ -29,7 +29,7 @@ function ShopPage({ shop }: Props) {
       <ImageGalleryWrapper images={shop.images} />
       <div className="w-11/12">
         {sorted.map((category) => (
-          <Category dishCategory={category} shopId={shop.id} />
+          <Category key={category.category} dishCategory={category} shopId={shop.id} />
         ))}
       </div>
     </div>

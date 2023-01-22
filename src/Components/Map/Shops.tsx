@@ -24,7 +24,7 @@ function Shops({ scrollTo }: Props) {
       behavior: "smooth",
       block: "center",
     });
-  }, [scrollTo]);
+  }, [scrollTo, refs]);
 
   return (
     <div className="w-full md:w-1/4 flex flex-row md:flex-col z-50 overflow-scroll">

@@ -27,7 +27,7 @@ function Category({ dishCategory, shopId }: Props) {
       <SmoothCollapse expanded={visible}>
         <div className="flex flex-col w-full items-center pt-2">
           {dishCategory.dishes.map((dish) => (
-            <CategoryDish dish={dish} shopId={shopId} />
+            <CategoryDish key={dish.category} dish={dish} shopId={shopId} />
           ))}
         </div>
       </SmoothCollapse>

@@ -7,7 +7,7 @@ import { AiOutlineArrowRight, AiOutlineLogout } from "react-icons/ai";
 import Link from "next/link";
 import Divider from "@/Components/Utils/Divider";
 
-function index() {
+function Index() {
   const user = useUser();
   const supabase = useSupabase();
   const shops = useAdminShops(user?.id || "");
@@ -61,4 +61,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
