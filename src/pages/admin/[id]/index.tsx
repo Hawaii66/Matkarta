@@ -8,7 +8,8 @@ import { SaveShop } from "@/Functions/SaveShop";
 import { IUpdateDishes } from "@/Interface/CRUD";
 import { IShop } from "@/Interface/Shop";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { GetServerSideProps } from "next";
+import { supabase } from "@supabase/auth-ui-react/dist/esm/common/theming";
+import { GetServerSideProps, GetStaticPaths } from "next";
 import { useState } from "react";
 
 interface Props {
@@ -68,6 +69,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     props: {
       shop,
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [], //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
   };
 };
 
