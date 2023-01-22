@@ -9,8 +9,17 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [scrollTo, setScrollTo] = useState(-1);
 
+  //Reset zoom to if move
   useEffect(() => {
     window.onscroll = () => {
+      setScrollTo(-1);
+    };
+
+    window.ondrag = () => {
+      setScrollTo(-1);
+    };
+
+    window.onpointermove = () => {
       setScrollTo(-1);
     };
   });
