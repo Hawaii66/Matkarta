@@ -12,7 +12,7 @@ interface Props {
 
 function Header({ title, backLink, category, description }: Props) {
   return (
-    <div className="w-full flex flex-col items-center justify-center py-4 mb-4 sticky top-0 z-50 bg-neutral-50 shadow-lg">
+    <div className="w-full flex flex-col items-center justify-center py-4 mb-4 z-50 bg-neutral-50 shadow-lg">
       <div className="w-11/12 relative flex items-center">
         <Link href={backLink} className="absolute text-2xl">
           <RiArrowGoBackFill />
