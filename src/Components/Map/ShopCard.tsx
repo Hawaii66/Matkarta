@@ -35,7 +35,9 @@ const ShopCard = React.forwardRef<HTMLDivElement, Props>(({ shop }, ref) => {
             </button>
           </div>
           <p className="w-full text-left font-normal text-lg text-neutral-700">
-            {shop.description}
+            {shop.description.length > 50
+              ? `${shop.description.slice(0, 50)}...`
+              : shop.description}
           </p>
         </div>
       </Link>
