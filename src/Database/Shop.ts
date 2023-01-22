@@ -47,12 +47,15 @@ export const GetAllBasicShop = async (): Promise<IPreviewShop[]> => {
     return [];
   }
 
-  const image = await GetPrimaryImage(shops[0].id);
+  const images: string[] = [];
+  for (var i = 0; i < shops.length; i++) {
+    images.push(await GetPrimaryImage(shops[i].id));
+  }
 
-  return shops.map((shop) => ({
+  return shops.map((shop, index) => ({
     category: shop.category,
     description: shop.description,
-    images: [image],
+    images: [images[index]],
     name: shop.name,
     id: shop.id,
   }));
